@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import NutritionBars from "@/app/components/NutritionBars"
+
 
 export default function Home() {
   return (
@@ -11,7 +13,7 @@ export default function Home() {
         </section>
 
         {/* Your visual bar graph (NutritionBars component placeholder) */}
-        {/* <NutritionBars /> */}
+        { <NutritionBars /> }
 
         {/* Food Recommendations */}
         <section className="bg-white rounded-2xl shadow p-4">

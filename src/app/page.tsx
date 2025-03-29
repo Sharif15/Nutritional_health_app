@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import NutritionBars from "@/app/components/NutritionBars"
+import NutritionBars from "./components/NutritionBars"
+import Navbar from "./components/Navbar";
 
 
 export default function Home() {
@@ -32,7 +33,7 @@ export default function Home() {
               <li>🥪 Turkey sandwich - 300 kcal</li>
               <li>🥛 Protein shake - 120 kcal</li>
             </ul>
-            <Link href="/food-tracking" className="mt-3 inline-block text-blue-600 hover:underline">
+            <Link href="/food_tracking" className="mt-3 inline-block text-blue-600 hover:underline">
               View full food log →
             </Link>
           </div>
@@ -43,7 +44,7 @@ export default function Home() {
               <li>🚶 10 min walk - 40 kcal</li>
               <li>🚴 15 min bike ride - 100 kcal</li>
             </ul>
-            <Link href="/exercise-tracking" className="mt-3 inline-block text-blue-600 hover:underline">
+            <Link href="/exercise_tracking" className="mt-3 inline-block text-blue-600 hover:underline">
               View today's activity →
             </Link>
           </div>
@@ -51,7 +52,7 @@ export default function Home() {
       </main>
 
       <footer className="bg-white shadow-inner p-4 mt-6">
-        {/* Replace with your <Navbar /> or <DashboardLinks /> */}
+        {<Navbar />}
         <div className="text-center text-sm text-gray-500">Dashboard links go here</div>
       </footer>
     </div>

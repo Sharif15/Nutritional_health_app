@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Button from "@/app/components/Button";
+import NutritionBars from "@/app/components/NutritionBars";
 import { Dialog } from "@/app/components/Dialog";
 
 export default function FoodTracking() {
@@ -17,17 +18,17 @@ export default function FoodTracking() {
   };
 
   return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
     <main className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-3xl font-bold text-center mb-6">Food Tracking</h1>
+    {/* <main className="flex-grow px-4 py-6 space-y-6 max-w-5xl mx-auto"> */}
 
-      {/* Daily Nutritional Intake (Placeholder) */}
-      <section className="mb-6 p-4 bg-white shadow-md rounded-lg text-center">
-        <h2 className="text-xl font-semibold">Daily Nutritional Intake</h2>
-        <p>(Chart or visualization goes here)</p>
-      </section>
+    <h1 className="text-3xl font-bold text-center mb-6">Food Tracking</h1>
+
+    {/* Your visual bar graph (NutritionBars component placeholder) */}
+        { <NutritionBars /> }
 
       {/* Food Log */}
-      <section className="mb-6">
+      <section className="mb-6 items-center">
         <h2 className="text-xl font-semibold">Food Log</h2>
         <ul className="space-y-2">
           {foodLog.map((item, index) => (
@@ -72,5 +73,6 @@ export default function FoodTracking() {
         </div>
       </Dialog>
     </main>
+    </div>
   );
 }

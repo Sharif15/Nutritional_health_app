@@ -28,7 +28,7 @@ export default function FoodTracking() {
         { <NutritionBars /> }
 
       {/* Food Log */}
-      <section className="mb-6 items-center">
+      <section className="mb-6 text-center items-center">
         <h2 className="text-xl font-semibold">Food Log</h2>
         <ul className="space-y-2">
           {foodLog.map((item, index) => (
@@ -40,8 +40,9 @@ export default function FoodTracking() {
       </section>
 
       {/* Add Food Modal */}
+      <div className="flex justify-center">
       <Dialog triggerText="Add Food">
-        <div className="space-y-4 p-6">
+        <div className="space-y-4 p-6 flex flex-col items-center">
           <h2 className="text-lg font-semibold mb-4">Add Food</h2>
 
           {/* Food Name Input */}
@@ -72,6 +73,7 @@ export default function FoodTracking() {
           </Button>
         </div>
       </Dialog>
+      </div>
     </main>
     </div>
   );

@@ -21,7 +21,7 @@ export default function RootLayout({
 
       <footer className="bg-white shadow-inner p-4 mt-6">
         {<Navbar />}
-        <div className="text-center text-sm text-gray-500">Dashboard links go here</div>
+        
       </footer>
       </body>
     </html>

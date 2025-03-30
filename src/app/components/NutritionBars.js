@@ -8,7 +8,7 @@ import { LabelList } from 'recharts';
 
 const groups = [
   {
-    title: 'Macronutrients + Fiber',
+    title: 'Macronutrients',
     data: [{ name: 'Macros', Protein: 80, Carbohydrates: 200, Fats: 70, Fiber: 25 }],
   },
   {

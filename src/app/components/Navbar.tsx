@@ -3,10 +3,10 @@ import Link from "next/link";
 
 const links = [
   { href: "/", label: "Home", icon: "🏠" },
-  { href: "/log", label: "Log", icon: "📅" },
+  { href: "/logs", label: "Log", icon: "📅" },
   { href: "/food_tracking", label: "Food", icon: "🍽️" },
-  { href: "/exercise_tracking", label: "Exercise", icon: "🏃" },
-  { href: "/groceries", label: "Groceries", icon: "🛒" },
+  { href: "/excercise_tracking", label: "Exercise", icon: "🏃" },
+  { href: "/groceries_list", label: "Groceries", icon: "🛒" },
 ];
 
 export default function Navbar() {

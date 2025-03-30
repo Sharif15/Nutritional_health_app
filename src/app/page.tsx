@@ -9,9 +9,6 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <main className="flex-grow px-4 py-6 space-y-6 max-w-5xl mx-auto">
         {/* Placeholder or hero */}
-        <section>
-          <p className="text-xl font-medium">Temp text</p>
-        </section>
 
         {/* Your visual bar graph (NutritionBars component placeholder) */}
         { <NutritionBars /> }
@@ -51,10 +48,6 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-white shadow-inner p-4 mt-6">
-        {<Navbar />}
-        <div className="text-center text-sm text-gray-500">Dashboard links go here</div>
-      </footer>
     </div>
   );
 }

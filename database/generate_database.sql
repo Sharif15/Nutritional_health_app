@@ -1,7 +1,16 @@
 -- The sql file used to automate the database generating for the app 
 
+-- make the databse to store the info 
+
+-- CREATE DATABASE nutrition_app;
+
+-- Command to run this file 
+
+-- psql -d nutrition_app -f generate_database.sql
+
 -- User table holds info about user like 
 -- user_id, password, name, age, weight, height, gender, level of activity of user
+
 
 CREATE TABLE Users (
     user_id SERIAL PRIMARY KEY,
@@ -25,15 +34,15 @@ CREATE TABLE Users (
 
 CREATE TABLE Excercises (
     excercise_id SERIAL PRIMARY KEY,
-    excercise_name VARCHAR(100) UNIQUE NOT NULL,
+    excercise_name VARCHAR(100) UNIQUE NOT NULL
 );
 
 -- Table for tracking the excercise activities of a user 
 
 CREATE TABLE Excercises_progress (
     performance_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES(Users),
-    excercise_id INT REFERENCES(Excercises),
+    user_id INT REFERENCES Users(user_id),
+    excercise_id INT REFERENCES Excercises(excercise_id),
     performance_data DATE DEFAULT CURRENT_DATE,
     reps INT,
     sets INT,
@@ -47,16 +56,6 @@ CREATE TABLE Weight_Progress (
     user_id INT REFERENCES Users(user_id),
     weight FLOAT,
     recorded_date DATE DEFAULT CURRENT_DATE
-);
-
--- Table to track the food consumption of a user 
-
-CREATE TABLE Food_Intake (
-    intake_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    food_id INT REFERENCES Food(food_id),
-    consumption_date DATE,
-    quantity FLOAT  -- in grams or a standardized unit
 );
 
 -- Keeps track of food information Foundations foods have the is_recipe set to false 
@@ -77,6 +76,10 @@ CREATE TABLE Food_Nutrition_Macro (
     fat FLOAT,
     fiber FLOAT
 );
+
+-- micro nutritions 
+
+
 
 
 -- keeps track of food recepies both user created and ones we create 
@@ -110,3 +113,22 @@ CREATE TABLE Recipe_Food_Link (
 );
 
 
+-- Table to track the food consumption of a user 
+
+CREATE TABLE Food_Intake (
+    intake_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES Users(user_id),
+    food_id INT REFERENCES Food(food_id),
+    consumption_date DATE,
+    quantity FLOAT  -- in grams or a standardized unit
+);
+
+-- daily progress 
+
+CREATE TABLE Daily_Progress (
+    progress_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES Users(user_id),
+    progress_date DATE,
+    total_calories_consumed FLOAT,
+    total_calories_burned FLOAT
+);

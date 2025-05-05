@@ -1,18 +1,27 @@
 -- The sql file used to automate the database generating for the app 
 
--- make the databse to store the info 
-
+-- Use the SQL command below in postgress to make the databse to store the information if a database is not already present
+-- It will create a database named nutrition_app
 -- CREATE DATABASE nutrition_app;
 
--- Command to run this file 
+-- This command is used to run this file to create the tables for database
 
 -- psql -d nutrition_app -f generate_database.sql
+
+-- SET search_path TO nutrition;
+
+
+-- Create a schema to isolate this app's tables
+CREATE SCHEMA IF NOT EXISTS nutrition;
+
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 
 -- User table holds info about user like 
 -- user_id, password, name, age, weight, height, gender, level of activity of user
 
-
-CREATE TABLE Users (
+CREATE TABLE nutrition.Users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -32,49 +41,57 @@ CREATE TABLE Users (
 
 -- Table to store different excercises that can be performed by the user
 
-CREATE TABLE Excercises (
-    excercise_id SERIAL PRIMARY KEY,
-    excercise_name VARCHAR(100) UNIQUE NOT NULL
+CREATE TABLE nutrition.Exercises (
+    exercise_id SERIAL PRIMARY KEY,
+    exercise_name VARCHAR(150) UNIQUE NOT NULL,
+    description TEXT,
+    exercise_type VARCHAR(50),
+    body_part VARCHAR(50),
+    equipment VARCHAR(50),
+    difficulty_level VARCHAR(50),
+    rating NUMERIC(2,1) CHECK (rating >= 0 AND rating <= 5),
+    rating_description TEXT
 );
 
--- Table for tracking the excercise activities of a user 
 
-CREATE TABLE Excercises_progress (
-    performance_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    excercise_id INT REFERENCES Excercises(excercise_id),
-    performance_data DATE DEFAULT CURRENT_DATE,
-    reps INT,
-    sets INT,
-    duration_mins FLOAT
+-- Table for tracking the exercise activities of a user 
+
+CREATE TABLE nutrition.Exercises_progress (
+    performance_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id INT NOT NULL REFERENCES nutrition.Users(user_id) ON DELETE CASCADE,
+    exercise_id INT NOT NULL REFERENCES nutrition.Exercises(exercise_id) ON DELETE CASCADE,
+    performance_data DATE NOT NULL DEFAULT CURRENT_DATE,
+    reps INT CHECK (reps >= 0),
+    sets INT CHECK (reps >= 0),
+    duration_mins FLOAT CHECK (duration_mins >= 0)
 );
 
 -- Table to track the weight change of the user over time 
 
-CREATE TABLE Weight_Progress (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    weight FLOAT,
+CREATE TABLE nutrition.Weight_Progress (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id INT REFERENCES nutrition.Users(user_id) ON DELETE CASCADE,
+    weight FLOAT CHECK (weight > 0),
     recorded_date DATE DEFAULT CURRENT_DATE
 );
 
 -- Keeps track of food information Foundations foods have the is_recipe set to false 
 
-CREATE TABLE Food (
+CREATE TABLE nutrition.Food (
     food_id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    calories FLOAT,
+    name VARCHAR(100) NOT NULL,
+    calories FLOAT CHECK (calories >= 0),
     is_recipe BOOLEAN DEFAULT FALSE
 );
 
 -- Keeps track of the nutrition information of a food_item 
 
-CREATE TABLE Food_Nutrition_Macro (
-    food_id INT PRIMARY KEY REFERENCES Food(food_id),
-    protein FLOAT,
-    carbs FLOAT,
-    fat FLOAT,
-    fiber FLOAT
+CREATE TABLE nutrition.Food_Nutrition_Macro (
+    food_id INT PRIMARY KEY REFERENCES nutrition.Food(food_id) ON DELETE CASCADE,
+    protein FLOAT CHECK (protein >= 0),
+    carbs FLOAT CHECK (carbs >= 0),
+    fat FLOAT CHECK (fat >= 0),
+    fiber FLOAT CHECK (fiber >= 0)
 );
 
 -- micro nutritions 
@@ -84,10 +101,10 @@ CREATE TABLE Food_Nutrition_Macro (
 
 -- keeps track of food recepies both user created and ones we create 
 
-CREATE TABLE Recipes (
+CREATE TABLE nutrition.Recipes (
     recipe_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    name VARCHAR(100),
+    user_id INT REFERENCES nutrition.Users(user_id)  ON DELETE SET NULL,
+    name VARCHAR(100) NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -95,40 +112,40 @@ CREATE TABLE Recipes (
 
 -- Keeps track of what ingreadent each recepies contain 
 
-CREATE TABLE Recipe_Ingredients (
+CREATE TABLE nutrition.Recipe_Ingredients (
     id SERIAL PRIMARY KEY,
-    recipe_id INT REFERENCES Recipes(recipe_id),
-    ingredient_food_id INT REFERENCES Food(food_id),
-    quantity FLOAT, -- e.g., grams or mL
+    recipe_id INT REFERENCES nutrition.Recipes(recipe_id) ON DELETE CASCADE,
+    ingredient_food_id INT REFERENCES nutrition.Food(food_id) ON DELETE CASCADE,
+    quantity FLOAT CHECK (quantity > 0), -- e.g., grams or mL
     unit VARCHAR(20) -- optional: grams, cups, tbsp, etc.
 );
 
 
 -- Cross reference table for recepies and the food they contain 
 
-CREATE TABLE Recipe_Food_Link (
-    recipe_id INT REFERENCES Recipes(recipe_id),
-    food_id INT REFERENCES Food(food_id),
+CREATE TABLE nutrition.Recipe_Food_Link (
+    recipe_id INT REFERENCES nutrition.Recipes(recipe_id) ON DELETE CASCADE,
+    food_id INT REFERENCES nutrition.Food(food_id) ON DELETE CASCADE,
     PRIMARY KEY (recipe_id, food_id)
 );
 
 
 -- Table to track the food consumption of a user 
 
-CREATE TABLE Food_Intake (
+CREATE TABLE nutrition.Food_Intake (
     intake_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    food_id INT REFERENCES Food(food_id),
-    consumption_date DATE,
-    quantity FLOAT  -- in grams or a standardized unit
+    user_id INT REFERENCES nutrition.Users(user_id) ON DELETE CASCADE,
+    food_id INT REFERENCES nutrition.Food(food_id) ON DELETE CASCADE,
+    consumption_date DATE DEFAULT CURRENT_DATE,
+    quantity FLOAT CHECK (quantity > 0) -- in grams or a standardized unit
 );
 
 -- daily progress 
 
-CREATE TABLE Daily_Progress (
-    progress_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users(user_id),
-    progress_date DATE,
-    total_calories_consumed FLOAT,
-    total_calories_burned FLOAT
+CREATE TABLE nutrition.Daily_Progress (
+    progress_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id INT REFERENCES nutrition.Users(user_id) ON DELETE CASCADE,
+    progress_date DATE DEFAULT CURRENT_DATE,
+    total_calories_consumed FLOAT CHECK (total_calories_consumed >= 0),
+    total_calories_burned FLOAT CHECK (total_calories_burned >= 0)
 );

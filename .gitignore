@@ -44,3 +44,5 @@ next-env.d.ts
 # development info
 
 database/data/exercises/README.md
+
+.venv/

@@ -49,7 +49,7 @@ CREATE TABLE nutrition.Exercises (
     body_part VARCHAR(50),
     equipment VARCHAR(50),
     difficulty_level VARCHAR(50),
-    rating NUMERIC(2,1) CHECK (rating >= 0 AND rating <= 5),
+    rating NUMERIC(2,1),
     rating_description TEXT
 );
 

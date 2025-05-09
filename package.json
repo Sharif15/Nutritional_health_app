@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "env": "^0.0.2",
     "next": "15.2.4",
+    "pg": "^8.15.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-swipeable": "^7.0.2",

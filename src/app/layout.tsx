@@ -3,8 +3,8 @@ import Navbar from "@/app/components/Navbar"
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Blaster Hack 2025",
-  description: "Generated for blaster Hack 2025",
+  title: "Nutrition App",
+  description: "EAT",
 };
 
 export default function RootLayout({

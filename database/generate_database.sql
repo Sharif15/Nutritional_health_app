@@ -66,6 +66,41 @@ CREATE TABLE nutrition.Exercises_progress (
     duration_mins FLOAT CHECK (duration_mins >= 0)
 );
 
+
+-- Table to store exercise routine created by users 
+
+CREATE TABLE nutrition.Routine(
+    routine_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id INT NOT NULL REFERENCES nutrition.Users(user_id) ON DELETE CASCADE,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+)
+
+CREATE TABLE nutrition.Routine_days (
+    routine_id UUID NOT NULL REFERENCES nutrition.Routine(routine_id) ON DELETE CASCADE,
+    day_of_week VARCHAR(20) NOT NULL CHECK (day_of_week IN (
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+    )),
+    PRIMARY KEY (routine_id, day_of_week)
+);
+
+
+-- Cross reference table for execise in a routein 
+
+CREATE TABLE nutrition.Exercises_in_routine (
+
+    routine_id UUID NOT NULL REFERENCES nutrition.Routine(routine_id) ON DELETE CASCADE,
+    exercise_id INT NOT NULL REFERENCES nutrition.Exercises(exercise_id) ON DELETE CASCADE,
+    order_in_routine INT NOT NULL CHECK (order_in_routine > 0),  -- Order of performance
+    sets INT NOT NULL CHECK (sets > 0),
+    reps INT NOT NULL CHECK (reps > 0),
+    rest_seconds INT CHECK (rest_seconds >= 0),
+    PRIMARY KEY (routine_id, exercise_id)
+)
+
+
 -- Table to track the weight change of the user over time 
 
 CREATE TABLE nutrition.Weight_Progress (

@@ -46,3 +46,5 @@ next-env.d.ts
 database/data/exercises/README.md
 
 .venv/
+env/
+venv/

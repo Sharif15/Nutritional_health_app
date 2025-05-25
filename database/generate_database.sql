@@ -62,7 +62,7 @@ CREATE TABLE nutrition.Exercises_progress (
     exercise_id INT NOT NULL REFERENCES nutrition.Exercises(exercise_id) ON DELETE CASCADE,
     performance_data DATE NOT NULL DEFAULT CURRENT_DATE,
     reps INT CHECK (reps >= 0),
-    sets INT CHECK (reps >= 0),
+    sets INT CHECK (sets >= 0),
     duration_mins FLOAT CHECK (duration_mins >= 0)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE nutrition.Routine(
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-)
+);
 
 CREATE TABLE nutrition.Routine_days (
     routine_id UUID NOT NULL REFERENCES nutrition.Routine(routine_id) ON DELETE CASCADE,
@@ -87,7 +87,7 @@ CREATE TABLE nutrition.Routine_days (
 );
 
 
--- Cross reference table for execise in a routein 
+-- Cross reference table for execise in a routine 
 
 CREATE TABLE nutrition.Exercises_in_routine (
 
@@ -98,7 +98,7 @@ CREATE TABLE nutrition.Exercises_in_routine (
     reps INT NOT NULL CHECK (reps > 0),
     rest_seconds INT CHECK (rest_seconds >= 0),
     PRIMARY KEY (routine_id, exercise_id)
-)
+);
 
 
 -- Table to track the weight change of the user over time 

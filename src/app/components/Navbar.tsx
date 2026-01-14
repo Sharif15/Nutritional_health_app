@@ -5,7 +5,7 @@ const links = [
   { href: "/", label: "Home", icon: "🏠" },
   { href: "/logs", label: "Log", icon: "📅" },
   { href: "/food_tracking", label: "Food", icon: "🍽️" },
-  { href: "/excercise_tracking", label: "Exercise", icon: "🏃" },
+  { href: "/exercise_tracking", label: "Exercise", icon: "🏃" },
   { href: "/groceries_list", label: "Groceries", icon: "🛒" },
 ];
 

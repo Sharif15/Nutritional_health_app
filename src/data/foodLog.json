@@ -1,8 +1,12 @@
 {
   "foodLog": [
     {
-      "name": "Pizza",
-      "calories": 87
+      "name": "pizza",
+      "calories": 222
+    },
+    {
+      "name": "carrot",
+      "calories": 363
     }
   ]
 }

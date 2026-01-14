@@ -1,0 +1,24 @@
+DB:
+    - Populate from foodCentral API
+    - Add 2 test users to table:
+        * SET search_path TO nutrition;
+        * INSERT INTO users (username, email, password_hash, password_salt, full_name, age, height, weight, gender, activity_level, goal)
+            VALUES
+            ('Jane123', 'Jane@example.com', 'fakehash1', 'salt1', 'Jane Doe', 30, 165.2, 60.5, 'female', 'moderate', 'maintain'), 
+            ('John123', 'John@example.com', 'fakehash2', 'salt2', 'John Doe', 28, 180.3, 82.0, 'male', 'active', 'build muscle'); 
+    - Add table connecting food with icon (ML)
+    - Remake profile table if equation changes
+
+Front-End:
+    - Connect food values DB based on profile
+        = Calendar
+        = Graphs connected to daily intake (maybe change to pie chart)
+        = Excersise
+        = Populating daily table (Change this to be more intuitive)
+
+    - Recomendation System (preference, need, restraints)
+
+    - Inputs
+        = Manual (Create Recipe or Use Existing Entry)
+        = Bar Code
+        = Photo?
